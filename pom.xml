@@ -14,6 +14,7 @@
 	<name>DefectRecord</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
+		<spring-boot-admin.version>3.0.2</spring-boot-admin.version>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>

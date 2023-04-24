@@ -165,7 +165,7 @@ public class FTPServiceImpl implements FTPService {
                     System.out.println("Directory already exists.");
                 }
 
-                nameImg = arraySplitName+arraySplitName[2];
+                nameImg = nameImg+"."+arraySplitName[2];
                 //save file in ftp
                 boolean done = ftpsClient.storeFile(path+fileName+"/" + nameImg, inputStream);
 

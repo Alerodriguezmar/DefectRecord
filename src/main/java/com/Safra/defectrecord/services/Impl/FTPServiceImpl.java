@@ -132,7 +132,7 @@ public class FTPServiceImpl implements FTPService {
                 InputStream inputStream = file.getInputStream();
 
                 //Extract name file
-                String fileName = file.getOriginalFilename();
+                String fileName = file.getOriginalFilename().split("\\.")[0];
 
                 System.out.println(fileName);
 
@@ -155,9 +155,9 @@ public class FTPServiceImpl implements FTPService {
                 }
 
                 //save file in ftp
-                boolean done = ftpsClient.storeFile(path+fileName+"/" + fileName, inputStream);
+                boolean done = ftpsClient.storeFile(path+fileName+"/" + file.getOriginalFilename(), inputStream);
 
-                urls.add(path+fileName+"/" + fileName);
+                urls.add(path+fileName+"/" + file.getOriginalFilename());
                 //close stream
                 inputStream.close();
                 //check if saved

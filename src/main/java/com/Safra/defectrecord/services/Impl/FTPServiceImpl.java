@@ -148,7 +148,7 @@ public class FTPServiceImpl implements FTPService {
                 var directoryPath = path+fileName+"/";
 
 
-                var nameImg = id.toString()+fileName;
+                var nameImg = id+fileName;
 
                 // Check if the directory exists
                 boolean directoryExists = ftpsClient.changeWorkingDirectory(directoryPath);
@@ -165,6 +165,7 @@ public class FTPServiceImpl implements FTPService {
                     System.out.println("Directory already exists.");
                 }
 
+                nameImg = arraySplitName+arraySplitName[3];
                 //save file in ftp
                 boolean done = ftpsClient.storeFile(path+fileName+"/" + nameImg, inputStream);
 

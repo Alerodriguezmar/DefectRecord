@@ -138,7 +138,9 @@ public class FTPServiceImpl implements FTPService {
                 InputStream inputStream = file.getInputStream();
 
                 //Extract name file
-                String fileName = file.getOriginalFilename().split("\\.")[0];
+                String[] arraySplitName = file.getOriginalFilename().split("\\.");
+
+                var fileName = arraySplitName[0]+"-"+arraySplitName[1];
 
                 System.out.println(fileName);
 

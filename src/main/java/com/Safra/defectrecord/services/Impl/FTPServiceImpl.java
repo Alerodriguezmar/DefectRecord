@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class FTPServiceImpl implements FTPService {
@@ -128,6 +129,11 @@ public class FTPServiceImpl implements FTPService {
             ftpsClient.setFileType(FTP.BINARY_FILE_TYPE);
 
             for(MultipartFile file:file1){
+
+                //unique
+                UUID id = UUID.randomUUID();
+
+
                 //Transform multipartFile in InputStream
                 InputStream inputStream = file.getInputStream();
 
@@ -138,6 +144,9 @@ public class FTPServiceImpl implements FTPService {
 
                 //directory
                 var directoryPath = path+fileName+"/";
+
+
+                var nameImg = id.toString()+fileName;
 
                 // Check if the directory exists
                 boolean directoryExists = ftpsClient.changeWorkingDirectory(directoryPath);
@@ -155,9 +164,9 @@ public class FTPServiceImpl implements FTPService {
                 }
 
                 //save file in ftp
-                boolean done = ftpsClient.storeFile(path+fileName+"/" + file.getOriginalFilename(), inputStream);
+                boolean done = ftpsClient.storeFile(path+fileName+"/" + nameImg, inputStream);
 
-                urls.add(path+fileName+"/" + file.getOriginalFilename());
+                urls.add(path+fileName+"/" + nameImg);
                 //close stream
                 inputStream.close();
                 //check if saved

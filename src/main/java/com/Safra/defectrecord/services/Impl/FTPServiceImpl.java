@@ -148,7 +148,7 @@ public class FTPServiceImpl implements FTPService {
                 var directoryPath = path+fileName+"/";
 
 
-                var nameImg = id.toString()+fileName;
+                var nameImg = id.toString()+"-"+fileName;
 
                 // Check if the directory exists
                 boolean directoryExists = ftpsClient.changeWorkingDirectory(directoryPath);

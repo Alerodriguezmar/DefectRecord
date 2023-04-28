@@ -20,9 +20,8 @@ public class OIBT {
     @Column(name = "ItemCode")
     private String  itemCode;
 
-
     @Column(name = "BatchNum")
-    private String  BatchNum;
+    private String  batchNum;
     @Id
     @Column(name = "Identifier")
     private String  identifier;

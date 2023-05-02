@@ -60,4 +60,24 @@ public class FabricReportServiceImpl implements FabricReportService {
     public void delete(String id) {
 
     }
+
+    @Override
+    public List<FabricReport> findAllByFabricSupplierItemCode(String itemCode) {
+        return fabricReportRepository.findAllByFabricSupplierItemCode(itemCode);
+    }
+
+    @Override
+    public List<FabricReport> findAllByFabricSupplierSupplier(String supplier) {
+        return fabricReportRepository.findAllByFabricSupplierSupplier(supplier);
+    }
+
+    @Override
+    public List<FabricReport> findAllByFabricTypeDefectDescription(String description) {
+        return fabricReportRepository.findAllByTypeDefectDescription(description);
+    }
+
+    @Override
+    public Integer countByFabricSupplierSupplier(String supplier) {
+        return fabricReportRepository.countByFabricSupplierSupplier(supplier);
+    }
 }

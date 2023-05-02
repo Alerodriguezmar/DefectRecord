@@ -25,4 +25,15 @@ public interface FabricReportService {
 
     void delete(String id);
 
+    List<FabricReport> findAllByFabricSupplierItemCode(String itemCode);
+
+    List<FabricReport> findAllByFabricSupplierSupplier(String supplier);
+
+    List<FabricReport> findAllByFabricTypeDefectDescription(String description);
+
+
+
+    Integer countByFabricSupplierSupplier(String supplier);
+
+
 }

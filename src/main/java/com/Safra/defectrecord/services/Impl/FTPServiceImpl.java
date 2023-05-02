@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -197,4 +198,33 @@ public class FTPServiceImpl implements FTPService {
         }
         return urls;
     }
+
+    @Override
+    public InputStream downloadFile(String file,FTPSClient ftpsClient2) throws IOException {
+
+        FTPSClient ftpsClient = new FTPSClient();
+
+        //Login ftp
+        ftpsClient.connect(server, port);
+        ftpsClient.login(username, password);
+
+        //Success SSL/TLS
+        ftpsClient.execPBSZ(0);
+        ftpsClient.execPROT("P");
+
+        //Config FTP
+        ftpsClient.enterLocalPassiveMode();
+        ftpsClient.setFileType(FTP.BINARY_FILE_TYPE);
+
+        InputStream inputStream = ftpsClient.retrieveFileStream(file);
+
+        ftpsClient.completePendingCommand();
+
+        ftpsClient.logout();
+        ftpsClient.disconnect();
+
+        return inputStream;
+
+    }
+
 }

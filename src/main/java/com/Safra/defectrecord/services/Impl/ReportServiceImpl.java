@@ -55,7 +55,7 @@ public class ReportServiceImpl  implements ReportService {
 
         List<FabricReport> fabricReportList = fabricReportService.findAllByFabricSupplierSupplier(supplier);
 
-        XWPFTemplate template = XWPFTemplate.compile("ReportModel.docx").render(
+        XWPFTemplate template = XWPFTemplate.compile("/app/ReportModel.docx").render(
                 new HashMap<String, Object>(){{
 
                     put("supplier", supplier);

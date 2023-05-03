@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -59,5 +62,26 @@ public class FabricReportController {
     public ResponseEntity<List<FabricReport>> create (@RequestBody List<FabricReport> fabricReports) {
         return ResponseEntity.status(HttpStatus.OK).body(fabricReportService.createAll(fabricReports));
     }
+
+
+    @GetMapping("/findByDate/{startDate}/{endDate}")
+    public ResponseEntity<List<FabricReport>> findByDate (@PathVariable String startDate , @PathVariable String endDate) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime startDateNow = LocalDate.parse(startDate, formatter).atStartOfDay();
+        LocalDateTime endDateNow = LocalDate.parse(endDate, formatter).atStartOfDay();
+        return ResponseEntity.status(HttpStatus.OK).body(fabricReportService.findByCreationDateBetween(startDateNow,endDateNow));
+    }
+
+
+    @GetMapping("/findByDateAndSupplier/{startDate}/{endDate}/{supplier}")
+    public ResponseEntity<List<FabricReport>> findByDateAndSupplier (@PathVariable String startDate , @PathVariable String endDate, @PathVariable String  supplier) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime startDateNow = LocalDate.parse(startDate, formatter).atStartOfDay();
+        LocalDateTime endDateNow = LocalDate.parse(endDate, formatter).atStartOfDay();
+        return ResponseEntity.status(HttpStatus.OK).body(fabricReportService.findByCreationDateBetweenAndFabricSupplierSupplier(startDateNow,endDateNow,supplier));
+    }
+
 
 }

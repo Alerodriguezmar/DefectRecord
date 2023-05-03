@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -27,6 +30,34 @@ public class ReportController {
         reportService.generatedReportByFabricSupplier(supplier);
 
 //
+        ContentDisposition contentDisposition = ContentDisposition.builder("inline")
+                .filename("Filename.docx")
+                .build();
+
+        //Crear un encabezado HTTP para el archivo
+        HttpHeaders encabezados = new HttpHeaders();
+        encabezados.setContentDisposition(contentDisposition);
+
+        File doc = new File("output.docx");
+        FileSystemResource fileSystemResource = new FileSystemResource(doc);
+
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .headers(encabezados)
+                .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+                .body(fileSystemResource);
+    }
+
+    @GetMapping("/findByDateAndSupplier/{startDate}/{endDate}/{supplier}")
+    public ResponseEntity<FileSystemResource> findAllFabricSupplierByBetweenDate(@PathVariable String startDate , @PathVariable String endDate, @PathVariable String  supplier) throws IOException {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime startDateNow = LocalDate.parse(startDate, formatter).atStartOfDay();
+        LocalDateTime endDateNow = LocalDate.parse(endDate, formatter).atStartOfDay();
+
+        reportService.generatedReportByFabricSupplierAndBetweenDate(startDateNow,endDateNow,supplier);
+
         ContentDisposition contentDisposition = ContentDisposition.builder("inline")
                 .filename("Filename.docx")
                 .build();

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -14,7 +15,7 @@ import java.util.List;
 public class FabricReport {
     @Id
     private String id;
-    private Instant creationDate;
+    private LocalDateTime creationDate;
     private FabricSupplier fabricSupplier;
     private Double quantityAffected;
     private TypeDefect typeDefect;

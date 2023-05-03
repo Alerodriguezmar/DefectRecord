@@ -85,4 +85,9 @@ public class FabricSupplierController {
     public ResponseEntity<List<FabricSupplier>> create (@RequestBody List<FabricSupplier> fabricSuppliers) {
         return ResponseEntity.status(HttpStatus.OK).body(fabricSupplierService.createAll(fabricSuppliers));
     }
+
+    @GetMapping("/SupplierNames")
+    public ResponseEntity<List<String>> findAllFabricSupplierNames () {
+        return ResponseEntity.status(HttpStatus.OK).body(fabricSupplierService.findAllFabricSupplierName());
+    }
 }

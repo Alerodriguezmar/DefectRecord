@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -91,6 +93,54 @@ public class ReportServiceImpl  implements ReportService {
         template.writeAndClose(new FileOutputStream("output.docx"));
 
         
+
+    }
+
+    @Override
+    public void generatedReportByFabricSupplierAndBetweenDate(LocalDateTime startDate, LocalDateTime endDate, String supplier) throws IOException {
+
+
+        List<FabricReport> fabricReportList = fabricReportService.findByCreationDateBetweenAndFabricSupplierSupplier(startDate,endDate,supplier);
+
+       XWPFTemplate template = XWPFTemplate.compile("/app/ReportModel.docx").render(
+
+              //  XWPFTemplate template = XWPFTemplate.compile("ReportModel.docx").render(
+
+                new HashMap<String, Object>(){{
+
+                    put("supplier", supplier);
+
+                    put("generatedDate", LocalDate.now());
+
+                    List<Map<String, Object>> reports = new ArrayList<>();
+
+                    for(FabricReport fabricReport: fabricReportList){
+                        List<Map<String, Object>> evidence = new ArrayList<>();
+
+                        Map<String, Object> dataReport = new HashMap<>();
+
+                        dataReport.put("batchNum",fabricReport.getBatchNum());
+
+                        dataReport.put("defect",fabricReport.getTypeDefect().getDescription());
+
+                        dataReport.put("quantity",fabricReport.getQuantityAffected()+" Mts");
+
+                        for(String ulr: fabricReport.getImagesUrl()){
+
+                            Map<String, Object> dataReportImg = new HashMap<>();
+
+                            dataReportImg.put("img", Pictures.ofStream(ftpService.downloadFile(ulr,null), PictureType.JPEG)
+                                    .size(250, 250).create());
+                            evidence.add(dataReportImg);
+                        }
+                        dataReport.put("evidence", evidence);
+
+                        reports.add(dataReport);
+                    }
+
+                    put("fabricReport", reports);
+                }});
+        template.writeAndClose(new FileOutputStream("output.docx"));
 
     }
 }

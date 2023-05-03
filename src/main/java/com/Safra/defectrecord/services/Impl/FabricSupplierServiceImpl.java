@@ -46,4 +46,14 @@ public class FabricSupplierServiceImpl implements FabricSupplierService {
     public List<FabricSupplier> findAllFabricSupplier() {
         return fabricSupplierRepository.findAll();
     }
+
+    @Override
+    public List<String> findAllFabricSupplierName() {
+        return fabricSupplierRepository
+                .findAll()
+                .stream()
+                .map(FabricSupplier::getSupplier)
+                .distinct()
+                .toList();
+    }
 }

@@ -62,4 +62,7 @@ public interface FabricSupplierService {
      */
     List<FabricSupplier> findAllFabricSupplier();
 
+
+    List<String> findAllFabricSupplierName();
+
 }

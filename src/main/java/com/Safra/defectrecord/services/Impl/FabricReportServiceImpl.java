@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -30,13 +31,13 @@ public class FabricReportServiceImpl implements FabricReportService {
 
     @Override
     public FabricReport create(FabricReport fabricReport) {
-        fabricReport.setCreationDate(Instant.now());
+        fabricReport.setCreationDate(LocalDateTime.now());
         return fabricReportRepository.save(fabricReport);
     }
 
     @Override
     public FabricReport createFile(FabricReport fabricReport, MultipartFile[] file) throws IOException {
-        fabricReport.setCreationDate(Instant.now());
+        fabricReport.setCreationDate(LocalDateTime.now());
         fabricReport.setImagesUrl(ftpService.uploadFiles(file));
         return fabricReportRepository.save(fabricReport);
     }
@@ -79,5 +80,15 @@ public class FabricReportServiceImpl implements FabricReportService {
     @Override
     public Integer countByFabricSupplierSupplier(String supplier) {
         return fabricReportRepository.countByFabricSupplierSupplier(supplier);
+    }
+
+    @Override
+    public List<FabricReport> findByCreationDateBetween(LocalDateTime startDate, LocalDateTime endDate) {
+        return fabricReportRepository.findByCreationDateBetween(startDate, endDate);
+    }
+
+    @Override
+    public List<FabricReport> findByCreationDateBetweenAndFabricSupplierSupplier(LocalDateTime startDate, LocalDateTime endDate, String supplier) {
+        return fabricReportRepository.findByCreationDateBetweenAndFabricSupplierSupplier(startDate, endDate, supplier);
     }
 }

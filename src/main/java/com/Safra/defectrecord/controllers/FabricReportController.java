@@ -84,4 +84,16 @@ public class FabricReportController {
     }
 
 
+    @GetMapping("/findByCreationDate")
+    public ResponseEntity<List<FabricReport>> findByDateAndSupplier () {
+
+
+        LocalDateTime startDateNow = LocalDate.now().atStartOfDay();
+        LocalDateTime endDateTime = startDateNow.plusDays(5).minusNanos(1);
+        return ResponseEntity.status(HttpStatus.OK).body(fabricReportService.findAll());
+
+      //  return ResponseEntity.status(HttpStatus.OK).body(fabricReportService.findByCreationDateBetween(startDateNow,endDateTime));
+    }
+
+
 }

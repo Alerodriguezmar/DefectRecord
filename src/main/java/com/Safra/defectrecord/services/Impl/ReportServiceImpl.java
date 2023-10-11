@@ -99,6 +99,8 @@ public class ReportServiceImpl  implements ReportService {
     @Override
     public void generatedReportByFabricSupplierAndBetweenDate(LocalDateTime startDate, LocalDateTime endDate, String supplier) throws IOException {
 
+        System.out.println("Initial Report");
+
         List<FabricReport> fabricReportList = new ArrayList<>();
 
         if(supplier.equals("All") || supplier.equals("Todos")){
@@ -113,8 +115,8 @@ public class ReportServiceImpl  implements ReportService {
         System.out.println("TotalDatos: "+ fabricReportList.size());
 
         String finalSupplier = supplier;
-       // XWPFTemplate template = XWPFTemplate.compile("ReportModel.docx").render(
-        XWPFTemplate template = XWPFTemplate.compile("/app/ReportModel.docx").render(
+        XWPFTemplate template = XWPFTemplate.compile("ReportModel.docx").render(
+       // XWPFTemplate template = XWPFTemplate.compile("/app/ReportModel.docx").render(
 
               //  XWPFTemplate template = XWPFTemplate.compile("ReportModel.docx").render(
 

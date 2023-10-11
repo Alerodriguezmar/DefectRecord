@@ -110,7 +110,7 @@ public class ReportServiceImpl  implements ReportService {
 
         List<FabricReport> finalFabricReportList = fabricReportList;
 
-        System.out.println(fabricReportList.size());
+        System.out.println("TotalDatos: "+ fabricReportList.size());
 
         String finalSupplier = supplier;
        // XWPFTemplate template = XWPFTemplate.compile("ReportModel.docx").render(

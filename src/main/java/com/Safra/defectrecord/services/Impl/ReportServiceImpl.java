@@ -99,22 +99,36 @@ public class ReportServiceImpl  implements ReportService {
     @Override
     public void generatedReportByFabricSupplierAndBetweenDate(LocalDateTime startDate, LocalDateTime endDate, String supplier) throws IOException {
 
+        System.out.println("Initial Report");
 
-        List<FabricReport> fabricReportList = fabricReportService.findByCreationDateBetweenAndFabricSupplierSupplier(startDate,endDate,supplier);
+        List<FabricReport> fabricReportList = new ArrayList<>();
 
-       XWPFTemplate template = XWPFTemplate.compile("/app/ReportModel.docx").render(
+        if(supplier.equals("All") || supplier.equals("Todos")){
+            fabricReportList = fabricReportService.findByCreationDateBetween(startDate,endDate);
+           supplier = "Todos";
+        } else {
+            fabricReportList  = fabricReportService.findByCreationDateBetweenAndFabricSupplierSupplier(startDate,endDate,supplier);
+        }
+
+        List<FabricReport> finalFabricReportList = fabricReportList;
+
+        System.out.println("TotalDatos: "+ fabricReportList.size());
+
+        String finalSupplier = supplier;
+        XWPFTemplate template = XWPFTemplate.compile("ReportModel.docx").render(
+       // XWPFTemplate template = XWPFTemplate.compile("/app/ReportModel.docx").render(
 
               //  XWPFTemplate template = XWPFTemplate.compile("ReportModel.docx").render(
 
                 new HashMap<String, Object>(){{
 
-                    put("supplier", supplier);
+                    put("supplier", finalSupplier);
 
                     put("generatedDate", LocalDate.now());
 
                     List<Map<String, Object>> reports = new ArrayList<>();
 
-                    for(FabricReport fabricReport: fabricReportList){
+                    for(FabricReport fabricReport: finalFabricReportList){
                         List<Map<String, Object>> evidence = new ArrayList<>();
 
                         Map<String, Object> dataReport = new HashMap<>();

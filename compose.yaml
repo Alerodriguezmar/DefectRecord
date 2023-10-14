@@ -1,191 +1,41 @@
 services:
-   mongo-db:
-      image: "mongo"
-      environment:
-         - MONGO_INITDB_ROOT_USERNAME=sa_fenix
-         - MONGO_INITDB_ROOT_PASSWORD=mJFWwVN&aEbSvs8
-      ports:
-         - "22110:27017"
-      container_name: mongo-db-prod
-      volumes:
-         - ${MONGO_DATA_DIR}:/data/db
-      networks:
-         - fenix-docker-network
-      hostname: mongodb
-   rabbit-mq:
-      image: "rabbitmq:3-management"
-      ports:
-         - "15672:15672"
-      container_name: rabbit-mq-prod
-      networks:
-         - fenix-docker-network
-      hostname: rabbitmq
-   front-web:
+#   mongo-db:
+#      image: "mongo"
+#      environment:
+#         - MONGO_INITDB_ROOT_USERNAME=sa_fenix
+#         - MONGO_INITDB_ROOT_PASSWORD=mJFWwVN&aEbSvs8
+#      ports:
+#         - "22110:27017"
+#      container_name: mongo-db-prod
+#      volumes:
+#         - ${MONGO_DATA_DIR}:/data/db
+#      networks:
+#         - fenix-docker-network
+#      hostname: mongodb
+   defect-record-web:
       build:
-         context: ../front_web
+         context: ../defect_record_web
          dockerfile: Dockerfile
-      image: "front-web"
+      image: "defect_record_web"
       ports:
-         - "3000:80"
-      container_name: front-web
+         - "22111:80"
+      container_name: defect_record_web
       networks:
-         - fenix-docker-network
-      hostname: rabbitmq
-   orchestrator-service:
+         - defect-docker-network
+   defect-record-service:
       build:
          context: ../.
-         dockerfile: orchestratorservice/Solution_Source_Code/orchestratorservice/Dockerfile
-      image: "orchestrator-service"
+         dockerfile: defect_record_backend/Dockerfile
+      image: "defect-record-service"
       ports:
-         - "22103:22103"
-      environment:
-         - SPRING_PROFILES_ACTIVE=production
-      container_name: orchestrator-service
-      volumes:
-         - ${APK_RESPOSITORY_PATH}:/apk
+         - "32110:32110"
+      container_name: defect-record-service
       networks:
-         - fenix-docker-network
-      hostname: orchestratorservice
+         - defect-docker-network
+      hostname: defect-record-service
       stdin_open: true
       tty: true
-      depends_on:
-         - mongo-db
-         - rabbit-mq
       restart: on-failure:5
       mem_limit: 3g
-   authorization-service:
-      build:
-         context: ../.
-         dockerfile: spring-authorization-server/Dockerfile
-      image: "authorization-service"
-      ports:
-         - "22118:22118"
-      container_name: authorization-container
-      networks:
-         - fenix-docker-network
-      hostname: authorizationservice
-      stdin_open: true
-      tty: true
-      depends_on:
-         - mongo-db
-      restart: on-failure:5
-      mem_limit: 1g
-   cutting-service:
-      build:
-         context: ../.
-         dockerfile: cuttingservice/Solution_Source_Code/CutStageService/Dockerfile
-      image: "cutting-service"
-      ports:
-         - "22113:22106"
-      environment:
-         - SPRING_PROFILES_ACTIVE=production
-      container_name: cutting-service
-      networks:
-         - fenix-docker-network
-      hostname: cuttingstageservice
-      stdin_open: true
-      tty: true
-      depends_on:
-         - mongo-db
-         - rabbit-mq
-      restart: on-failure:5
-      mem_limit: 1g
-   logistic-service:
-      image: "logistic-service"
-      build:
-         context: ../.
-         dockerfile: logisticservice/Solution_Source_Code/logisticservice/Dockerfile
-      ports:
-         - "22111:22111"
-      environment:
-         - SPRING_PROFILES_ACTIVE=production
-      container_name: logistic-service
-      networks:
-         - fenix-docker-network
-      hostname: logisticservice
-      stdin_open: true
-      tty: true
-      depends_on:
-         - mongo-db
-         - rabbit-mq
-      restart: on-failure:5
-      mem_limit: 5g
-   erp-connector-service:
-      build:
-         context: ../.
-         dockerfile: erpconnectorservice/Solution_Source_Code/ERPConnectorService/Dockerfile
-      image: "erp-connector-service"
-      ports:
-         - "22109:22109"
-      environment:
-         - SPRING_PROFILES_ACTIVE=production
-      container_name: erp-connector-service
-      networks:
-         - fenix-docker-network
-      hostname: erpconnectorservice
-      stdin_open: true
-      tty: true
-      depends_on:
-         - mongo-db
-         - rabbit-mq
-      restart: on-failure:5
-      mem_limit: 3g
-   heatsealingandsewing-service:
-      image: "heatsealingandsewing-service"
-      build:
-         context: ../.
-         dockerfile: sewing-heatsteal-service/Solution_Source_Code/heatsealingandsewing/Dockerfile
-      ports:
-         - "22122:22122"
-      environment:
-         - SPRING_PROFILES_ACTIVE=production
-      container_name: heatsealingandsewing-service
-      networks:
-         - fenix-docker-network
-      hostname: heatsealingandsewingservice
-      stdin_open: true
-      tty: true
-      depends_on:
-         - mongo-db
-         - rabbit-mq
-      restart: on-failure:5
-   assembling-service:
-      image: "assembling-service"
-      build:
-         context: ../.
-         dockerfile: assemblingservice/Solution_Source_Code/assemblingservice/Dockerfile
-      ports:
-         - "22114:22113"
-      environment:
-         - SPRING_PROFILES_ACTIVE=production
-      container_name: assembling-service
-      networks:
-         - fenix-docker-network
-      hostname: assemblingservice
-      stdin_open: true
-      tty: true
-      depends_on:
-         - mongo-db
-         - rabbit-mq
-      restart: on-failure:5
-   quality-service:
-      image: "quality-service"
-      build:
-         context: ../.
-         dockerfile: quality/Solution_Source_Code/qualityservice/Dockerfile
-      ports:
-         - "22121:22121"
-      environment:
-         - SPRING_PROFILES_ACTIVE=production
-      container_name: quality-service
-      networks:
-         - fenix-docker-network
-      hostname: qualityservice
-      stdin_open: true
-      tty: true
-      depends_on:
-         - mongo-db
-         - rabbit-mq
-      restart: on-failure:5
 networks:
-   fenix-docker-network: {}
+   defect-docker-network: {}

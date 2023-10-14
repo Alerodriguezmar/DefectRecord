@@ -25,7 +25,7 @@ services:
    defect-record-service:
       build:
          context: ../.
-         dockerfile: defect_record_backend/Dockerfile
+         dockerfile: defect_record_back/Dockerfile
       image: "defect-record-service"
       ports:
          - "32110:32110"

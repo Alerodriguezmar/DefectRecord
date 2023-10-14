@@ -24,7 +24,7 @@ services:
          - defect-docker-network
    defect-record-service:
       build:
-         context: ../defect_record_back
+         context: .
          dockerfile: Dockerfile
       image: "defect-record-service"
       ports:

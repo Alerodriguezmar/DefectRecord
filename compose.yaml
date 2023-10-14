@@ -28,7 +28,7 @@ services:
          dockerfile: Dockerfile
       image: "defect-record-service"
       ports:
-         - "32110:32110"
+         - "32110:22110"
       container_name: defect-record-service
       networks:
          - defect-docker-network

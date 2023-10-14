@@ -18,7 +18,7 @@ services:
          dockerfile: Dockerfile
       image: "defect_record_front"
       ports:
-         - "22111:80"
+         - "32111:80"
       container_name: defect_record_front
       networks:
          - defect-docker-network

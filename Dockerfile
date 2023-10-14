@@ -1,5 +1,5 @@
 # Utiliza una imagen oficial de Maven para compilar la aplicación
-FROM maven:3.8.2-openjdk-17-slim as build
+FROM maven:3.9-amazoncorretto-17 AS build
 
 # Establece el directorio de trabajo en /build
 WORKDIR /build

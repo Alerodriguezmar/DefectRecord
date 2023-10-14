@@ -5,7 +5,9 @@ FROM maven:3.9-amazoncorretto-17 AS build
 WORKDIR /build
 
 # Copia el archivo pom.xml para descargar las dependencias antes de copiar todo el código
-COPY pom.xml .
+#COPY pom.xml .
+COPY .  /build
+
 RUN mvn clean package -DskipTests
 
 # Crea un contenedor ligero para ejecutar la aplicación

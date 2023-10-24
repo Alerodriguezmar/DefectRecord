@@ -139,6 +139,10 @@ public class ReportServiceImpl  implements ReportService {
 
                         dataReport.put("quantity",fabricReport.getQuantityAffected()+" Mts");
 
+                        dataReport.put("comments",fabricReport.getComment());
+
+                        dataReport.put("supplierInfo",fabricReport.getFabricSupplier().getSupplier());
+
                         for(String ulr: fabricReport.getImagesUrl()){
 
                             Map<String, Object> dataReportImg = new HashMap<>();

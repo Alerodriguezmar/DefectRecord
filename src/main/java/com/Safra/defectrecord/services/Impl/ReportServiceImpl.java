@@ -115,8 +115,8 @@ public class ReportServiceImpl  implements ReportService {
         System.out.println("TotalDatos: "+ fabricReportList.size());
 
         String finalSupplier = supplier;
-        XWPFTemplate template = XWPFTemplate.compile("ReportModel.docx").render(
-       // XWPFTemplate template = XWPFTemplate.compile("/app/ReportModel.docx").render(
+       // XWPFTemplate template = XWPFTemplate.compile("ReportModel.docx").render(
+       XWPFTemplate template = XWPFTemplate.compile("/app/ReportModel.docx").render(
 
               //  XWPFTemplate template = XWPFTemplate.compile("ReportModel.docx").render(
 

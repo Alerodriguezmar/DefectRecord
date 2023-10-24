@@ -1,31 +1,41 @@
 services:
-   inventaryentryandexitservice:
-      image: "inventaryentryandexitservice"
+#   mongo-db:
+#      image: "mongo"
+#      environment:
+#         - MONGO_INITDB_ROOT_USERNAME=sa_fenix
+#         - MONGO_INITDB_ROOT_PASSWORD=mJFWwVN&aEbSvs8
+#      ports:
+#         - "22110:27017"
+#      container_name: mongo-db-prod
+#      volumes:
+#         - ${MONGO_DATA_DIR}:/data/db
+#      networks:
+#         - fenix-docker-network
+#      hostname: mongodb
+   defect-record-web:
+      build:
+         context: ../defect_record_front
+         dockerfile: Dockerfile
+      image: "defect_record_front"
       ports:
-         - "22100:22100"
-      container_name: inventaryentryandexitservice
-      hostname: inventaryentryandexitservice
+         - "32111:80"
+      container_name: defect_record_front
+      networks:
+         - defect-docker-network
+   defect-record-service:
+      build:
+         context: .
+         dockerfile: Dockerfile
+      image: "defect-record-service"
+      ports:
+         - "32110:22110"
+      container_name: defect-record-service
+      networks:
+         - defect-docker-network
+      hostname: defect-record-service
       stdin_open: true
       tty: true
-      network_mode: "host"
-
-   stocktransferservice:
-      image: "stocktransferservice"
-      ports:
-         - "22101:22101"
-      container_name: stocktransferservice
-      hostname: stocktransferservice
-      stdin_open: true
-      tty: true
-      network_mode: "host"
-   defectrecord:
-      image: "defectrecord"
-      ports:
-         - "22110:22110"
-      container_name: defectrecord
-      hostname: defectrecord
-      stdin_open: true
-      tty: true
-      network_mode: "host"
-
-
+      restart: on-failure:5
+      mem_limit: 3g
+networks:
+   defect-docker-network: {}

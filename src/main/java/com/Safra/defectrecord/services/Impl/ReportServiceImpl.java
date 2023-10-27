@@ -139,6 +139,10 @@ public class ReportServiceImpl  implements ReportService {
 
                         dataReport.put("quantity",fabricReport.getQuantityAffected()+" Mts");
 
+                        dataReport.put("reference",fabricReport.getFabricSupplier().getReference());
+
+                        dataReport.put("itemCode",fabricReport.getFabricSupplier().getItemCode());
+
                         dataReport.put("comments",fabricReport.getComment());
 
                         dataReport.put("supplierInfo",fabricReport.getFabricSupplier().getSupplier());

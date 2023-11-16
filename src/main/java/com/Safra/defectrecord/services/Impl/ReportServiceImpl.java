@@ -176,7 +176,7 @@ public class ReportServiceImpl  implements ReportService {
 
                         reports.add(dataReport);
                     }
-
+                    put("resume",resumen);
                     put("fabricReport", reports);
                 }});
         template.writeAndClose(new FileOutputStream("output.docx"));

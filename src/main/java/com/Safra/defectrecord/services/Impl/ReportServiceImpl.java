@@ -139,6 +139,7 @@ public class ReportServiceImpl  implements ReportService {
                        resumenSpec.put("prove",fabricSupplier.getSupplier());
                        resumenSpec.put("item",fabricSupplier.getItemCode());
                        resumenSpec.put("name",fabricSupplier.getReference());
+                       resumenSpec.put("count",fabricReports.size());
                        resumenSpec.put("total",countTotal);
                        resumen.add(resumenSpec);
                    });

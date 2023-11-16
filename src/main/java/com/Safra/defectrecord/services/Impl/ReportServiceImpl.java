@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -116,7 +117,8 @@ public class ReportServiceImpl  implements ReportService {
 
         String finalSupplier = supplier;
        // XWPFTemplate template = XWPFTemplate.compile("ReportModel.docx").render(
-       XWPFTemplate template = XWPFTemplate.compile("/app/ReportModel.docx").render(
+        List<FabricReport> finalFabricReportList1 = fabricReportList;
+        XWPFTemplate template = XWPFTemplate.compile("/app/ReportModel.docx").render(
 
               //  XWPFTemplate template = XWPFTemplate.compile("ReportModel.docx").render(
 
@@ -125,6 +127,21 @@ public class ReportServiceImpl  implements ReportService {
                     put("supplier", finalSupplier);
 
                     put("generatedDate", LocalDate.now());
+
+
+
+                   var resume =  finalFabricReportList1.stream().collect(Collectors.groupingBy(FabricReport::getFabricSupplier));
+
+                    List<Map<String, Object>> resumen = new ArrayList<>();
+                   resume.forEach((fabricSupplier, fabricReports) -> {
+                       Map<String, Object> resumenSpec = new HashMap<>();
+                       var countTotal = fabricReports.stream().mapToDouble(FabricReport::getQuantityAffected).sum();
+                       resumenSpec.put("prove",fabricSupplier.getSupplier());
+                       resumenSpec.put("item",fabricSupplier.getItemCode());
+                       resumenSpec.put("name",fabricSupplier.getReference());
+                       resumenSpec.put("total",countTotal);
+                       resumen.add(resumenSpec);
+                   });
 
                     List<Map<String, Object>> reports = new ArrayList<>();
 

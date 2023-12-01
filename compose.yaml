@@ -6,7 +6,7 @@ services:
          - MONGO_INITDB_ROOT_PASSWORD=mJFWwVN&aEbSvs8
       ports:
          - "42110:27017"
-      container_name: mongo-db-prod
+      container_name: mongo-db-defect
       volumes:
          - /home/safra/services/databases/mongo-defect:/data/db
       networks:

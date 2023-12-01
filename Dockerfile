@@ -5,7 +5,7 @@ FROM maven:3.9-amazoncorretto-17 AS builder
 WORKDIR /app
 
 # Copiar todo el contenido del proyecto1 al directorio de trabajo
-COPY ./  /app/service
+COPY .  /app/service
 
 # Compilar y generar el archivo JAR para proyecto2
 RUN cd /app/service && mvn clean package -DskipTests

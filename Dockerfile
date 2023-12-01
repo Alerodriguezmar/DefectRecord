@@ -18,7 +18,7 @@ WORKDIR /app
 
 # Copiamos los JAR generados desde la imagen de compilación a la imagen de ejecución
 COPY --from=builder /app/service/target/defectRecord-1.0.jar  /app/defectRecord-1.0.jar
-COPY /app/service/ReportModel.docx /app
+COPY --from=builder /app/service/ReportModel.docx /app
 
 
 # Comando para ejecutar la aplicación (ajusta según tus necesidades)

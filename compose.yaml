@@ -5,7 +5,7 @@ services:
          - MONGO_INITDB_ROOT_USERNAME=sa_fenix
          - MONGO_INITDB_ROOT_PASSWORD=mJFWwVN&aEbSvs8
       ports:
-         - "40000:27017"
+         - "42110:27017"
       container_name: mongo-db-defect
       volumes:
          - /home/safra/services/databases/mongo-defect:/data/db
@@ -15,10 +15,10 @@ services:
    defect-record-web:
       build:
          context: ../defect_record_front
-         dockerfile: Dockerfile
+         dockerfile: Dockerfile_old
       image: "defect_record_front"
       ports:
-         - "42111:80"
+         - "40000:80"
       container_name: defect_record_front
       networks:
          - defect-docker-network

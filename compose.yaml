@@ -1,24 +1,24 @@
 services:
-#   mongo-db:
-#      image: "mongo"
-#      environment:
-#         - MONGO_INITDB_ROOT_USERNAME=sa_fenix
-#         - MONGO_INITDB_ROOT_PASSWORD=mJFWwVN&aEbSvs8
-#      ports:
-#         - "22110:27017"
-#      container_name: mongo-db-prod
-#      volumes:
-#         - ${MONGO_DATA_DIR}:/data/db
-#      networks:
-#         - fenix-docker-network
-#      hostname: mongodb
+   mongo-db:
+      image: "mongo"
+      environment:
+         - MONGO_INITDB_ROOT_USERNAME=sa_fenix
+         - MONGO_INITDB_ROOT_PASSWORD=mJFWwVN&aEbSvs8
+      ports:
+         - "42110:27017"
+      container_name: mongo-db-prod
+      volumes:
+         - /home/safra/services/databases/mongo-defect:/data/db
+      networks:
+         - defect-docker-network
+      hostname: mongodb
    defect-record-web:
       build:
          context: ../defect_record_front
          dockerfile: Dockerfile
       image: "defect_record_front"
       ports:
-         - "32111:80"
+         - "42111:80"
       container_name: defect_record_front
       networks:
          - defect-docker-network
@@ -28,7 +28,7 @@ services:
          dockerfile: Dockerfile
       image: "defect-record-service"
       ports:
-         - "32110:22110"
+         - "42110:22110"
       container_name: defect-record-service
       networks:
          - defect-docker-network

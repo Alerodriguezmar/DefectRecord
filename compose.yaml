@@ -15,7 +15,7 @@ services:
    defect-record-web:
       build:
          context: ../defect_record_front
-         dockerfile: Dockerfile_old
+         dockerfile: Dockerfile
       image: "defect_record_front"
       ports:
          - "40000:80"

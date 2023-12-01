@@ -11,7 +11,7 @@ COPY .  /app/service
 RUN cd /app/service && mvn clean package -DskipTests
 
 # Cambiamos a una imagen más ligera para la ejecución
-FROM eclipse-temurin:17
+FROM openjdk:17-jdk-slim
 
 # Directorio de trabajo dentro del contenedor
 WORKDIR /app

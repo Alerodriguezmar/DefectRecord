@@ -25,6 +25,7 @@ public class OIBT {
     @Id
     @Column(name = "Identifier")
     private String  identifier;
+
     @Column(name = "ItemName")
     private String itemName;
 

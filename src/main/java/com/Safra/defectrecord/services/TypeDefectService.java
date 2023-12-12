@@ -17,5 +17,7 @@ public interface TypeDefectService {
 
     List<TypeDefect> findAll();
 
+    List<TypeDefect> findAllByArea(String area);
+
     void delete(String id);
 }

@@ -17,7 +17,6 @@ public class FabricSupplierServiceImpl implements FabricSupplierService {
 
     @Override
     public FabricSupplier findFabricSupplierById(String id) {
-        System.out.println(id);
         return fabricSupplierRepository.findById(id).orElseThrow();
     }
 

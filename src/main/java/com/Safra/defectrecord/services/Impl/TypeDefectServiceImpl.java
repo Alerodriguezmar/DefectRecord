@@ -42,6 +42,11 @@ public class TypeDefectServiceImpl implements TypeDefectService {
     }
 
     @Override
+    public List<TypeDefect> findAllByArea(String area) {
+        return typeDefectRepository.findAllByArea(area);
+    }
+
+    @Override
     public void delete(String id) {
         var typeDefectByDelete = typeDefectRepository.findById(id).orElseThrow();
         typeDefectRepository.delete(typeDefectByDelete);

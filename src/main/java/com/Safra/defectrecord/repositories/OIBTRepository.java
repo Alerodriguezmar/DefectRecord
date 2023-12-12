@@ -31,18 +31,18 @@ public interface OIBTRepository extends JpaRepository<OIBT,String> {
 
 
     String consultByName = """
-                   select distinct
-                                         bt.ItemCode,
-                                         bt.ItemName,
-                                         bt.BatchNum,
-                                         CONCAT(bt.ItemCode,'.',bt.BatchNum) Identifier
-                                   from OIBT AS bt
+                select distinct
+                                      bt.ItemCode,
+                                      bt.ItemName,
+                                     bt.ItemCode BatchNum,
+                                      bt.ItemCode Identifier                
+                                from OIBT AS bt
                                          INNER JOIN OITM as tm ON bt.ItemCode = tm.ItemCode
-                                   WHERE tm.ItemName LIKE '%:name%';
-            
+                                   WHERE tm.ItemName LIKE %:name%
+                          
             """;
 
-    @Query(nativeQuery = true, value = consult)
+    @Query(nativeQuery = true, value = consultByName)
     List<OIBT> findAllByName(@Param("name") String name);
 
 

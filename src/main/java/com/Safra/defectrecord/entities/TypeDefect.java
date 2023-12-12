@@ -14,4 +14,6 @@ public class TypeDefect {
     private String id;
 
     private String description;
+
+    private String area;
 }

@@ -22,8 +22,8 @@ public class TypeDefectController {
     private TypeDefectService typeDefectService;
 
     @GetMapping("")
-    public ResponseEntity<List<TypeDefect>> findAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(typeDefectService.findAll());
+    public ResponseEntity<List<TypeDefect>> findAll(@RequestParam(name = "area" ,required = false,defaultValue = "Corte") String area) {
+        return ResponseEntity.status(HttpStatus.OK).body(typeDefectService.findAllByArea(area));
     }
 
     @GetMapping("/{id}")

@@ -27,4 +27,18 @@ public class OIBTServiceImpl implements OIBTService {
 
         return oibts.stream().map(OIBT::getItemCode).distinct().toList();
     }
+
+    @Override
+    public List<OIBT> findAllByName(String name) {
+        return oibtRepository.findAllByName(name);
+    }
+
+    @Override
+    public List<String> findAllItemCodeByName(String name) {
+
+        var oibts = oibtRepository.findAllByName(name);
+
+        return oibts.stream().map(OIBT::getItemCode).distinct().toList();
+    }
+
 }

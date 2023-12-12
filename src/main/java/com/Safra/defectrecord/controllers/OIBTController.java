@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,20 +26,55 @@ public class OIBTController {
 
 
     @GetMapping()
-    public ResponseEntity<List<OIBT>> findAllByBatchNum(@RequestParam(name = "batchNum" ) String batchNum){
-        return ResponseEntity.status(HttpStatus.OK).body(oibtService.findAllByBatchNum(batchNum));
+    public ResponseEntity<List<OIBT>> findAllByBatchNum(@RequestParam(name = "batchNum" ,required = false) String batchNum,@RequestParam(name = "name" ,required = false) String name){
+
+
+
+        List<OIBT> oibts = new ArrayList<>();
+
+        if (batchNum != null && !batchNum.isEmpty()) {
+            oibts =  oibtService.findAllByBatchNum(batchNum);
+        }
+
+        if (name != null && !name.isEmpty()) {
+            oibts =  oibtService.findAllByName(name);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(oibts);
     }
 
 
 
     @GetMapping("/size")
-    public ResponseEntity<Integer> findAllByBatchNumSize(@RequestParam(name = "batchNum") String batchNum){
-        return ResponseEntity.status(HttpStatus.OK).body(oibtService.findAllByBatchNum(batchNum).size());
+    public ResponseEntity<Integer> findAllByBatchNumSize(@RequestParam(name = "batchNum" ,required = false) String batchNum,@RequestParam(name = "name" ,required = false) String name){
+
+        List<OIBT> oibts = new ArrayList<>();
+
+        if (batchNum != null && !batchNum.isEmpty()) {
+            oibts =  oibtService.findAllByBatchNum(batchNum);
+        }
+
+        if (name != null && !name.isEmpty()) {
+            oibts =  oibtService.findAllByName(name);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(oibts.size());
     }
 
     @GetMapping("/itemCode")
-    public ResponseEntity<List<String>> findAllItemCodeByBatchNum(@RequestParam(name = "batchNum") String batchNum){
-        return ResponseEntity.status(HttpStatus.OK).body(oibtService.findAllItemCodeByBatchNum(batchNum));
+    public ResponseEntity<List<String>> findAllItemCodeByBatchNum(@RequestParam(name = "batchNum" ,required = false) String batchNum,@RequestParam(name = "name" ,required = false) String name){
+
+        List<String> oibts = new ArrayList<>();
+
+        if (batchNum != null && !batchNum.isEmpty()) {
+            oibts =  oibtService.findAllItemCodeByBatchNum(batchNum);
+        }
+
+        if (name != null && !name.isEmpty()) {
+            oibts =  oibtService.findAllItemCodeByName(name);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(oibts);
     }
 
 

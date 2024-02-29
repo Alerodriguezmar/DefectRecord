@@ -3,6 +3,7 @@ package com.Safra.defectrecord.services.Impl;
 
 import com.Safra.defectrecord.services.FTPService;
 import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPSClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -199,23 +200,69 @@ public class FTPServiceImpl implements FTPService {
         return urls;
     }
 
+//    @Override
+//    public InputStream downloadFile(String file,FTPSClient ftpsClient2) throws IOException {
+//
+//        FTPSClient ftpsClient = new FTPSClient();
+//
+//        //Login ftp
+//        ftpsClient.connect(server, port);
+//        ftpsClient.login(username, password);
+//
+//        //Success SSL/TLS
+//        ftpsClient.execPBSZ(0);
+//        ftpsClient.execPROT("P");
+//
+//        //Config FTP
+//        ftpsClient.enterLocalPassiveMode();
+//        ftpsClient.setFileType(FTP.BINARY_FILE_TYPE);
+//
+//        InputStream inputStream = ftpsClient.retrieveFileStream(file);
+//
+//        ftpsClient.completePendingCommand();
+//
+//        ftpsClient.logout();
+//        ftpsClient.disconnect();
+//
+//        return inputStream;
+//
+//    }
+
     @Override
-    public InputStream downloadFile(String file,FTPSClient ftpsClient2) throws IOException {
+    public InputStream downloadFile(String file, FTPSClient ftpsClient2) throws IOException {
 
         FTPSClient ftpsClient = new FTPSClient();
 
-        //Login ftp
+        // Login ftp
         ftpsClient.connect(server, port);
         ftpsClient.login(username, password);
 
-        //Success SSL/TLS
+        // Success SSL/TLS
         ftpsClient.execPBSZ(0);
         ftpsClient.execPROT("P");
 
-        //Config FTP
+        // Config FTP
         ftpsClient.enterLocalPassiveMode();
         ftpsClient.setFileType(FTP.BINARY_FILE_TYPE);
 
+        // Validar si el archivo existe
+        FTPFile[] files = ftpsClient.listFiles();
+        boolean fileExists = false;
+        for (FTPFile ftpFile : files) {
+            if (ftpFile.getName().equals(file)) {
+                fileExists = true;
+                break;
+            }
+        }
+
+        // Si el archivo no existe, retornar null
+        if (!fileExists) {
+            ftpsClient.logout();
+            ftpsClient.disconnect();
+            return null;
+        }
+
+        // Intentar descargar el archivo
         InputStream inputStream = ftpsClient.retrieveFileStream(file);
 
         ftpsClient.completePendingCommand();
@@ -224,7 +271,6 @@ public class FTPServiceImpl implements FTPService {
         ftpsClient.disconnect();
 
         return inputStream;
-
     }
 
 }

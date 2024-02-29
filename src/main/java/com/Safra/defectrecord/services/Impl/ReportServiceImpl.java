@@ -80,9 +80,14 @@ public class ReportServiceImpl  implements ReportService {
 
                             Map<String, Object> dataReportImg = new HashMap<>();
 
-                            dataReportImg.put("img", Pictures.ofStream(ftpService.downloadFile(ulr,null), PictureType.JPEG)
-                                    .size(100, 120).create());
-                            evidence.add(dataReportImg);
+                            var data = ftpService.downloadFile(ulr,null);
+
+                            if(data != null){
+                                dataReportImg.put("img", Pictures.ofStream(data, PictureType.JPEG)
+                                        .size(100, 120).create());
+                                evidence.add(dataReportImg);
+                            }
+
                         }
                         dataReport.put("evidence", evidence);
 
